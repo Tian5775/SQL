@@ -80,3 +80,5 @@ MySQL Óï·¨
 SELECT column_name(s)
 FROM table_name
 LIMIT number;
+Àý
+SELECT * FROM Websites LIMIT 2;
