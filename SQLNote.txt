@@ -82,3 +82,123 @@ FROM table_name
 LIMIT number;
 例
 SELECT * FROM Websites LIMIT 2;
+
+LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式。
+SQL LIKE 语法
+SELECT column_name(s)
+FROM table_name
+WHERE column_name LIKE pattern;
+例
+下面的 SQL 语句选取 name 以字母 "G" 开始的所有客户：
+SELECT * FROM Websites
+WHERE name LIKE 'G%';
+通过使用 NOT 关键字，您可以选取不匹配模式的记录。
+例
+下面的 SQL 语句选取 name 不包含模式 "oo" 的所有客户：
+SELECT * FROM Websites
+WHERE name NOT LIKE '%oo%';
+
+在 SQL 中，通配符与 SQL LIKE 操作符一起使用。
+SQL 通配符用于搜索表中的数据。
+在 SQL 中，可使用以下通配符：
+%	替代 0 个或多个字符
+_	替代一个字符
+[charlist]	字符列中的任何单一字符
+[^charlist]或[!charlist]	不在字符列中的任何单一字符
+MySQL 中使用 REGEXP 或 NOT REGEXP 运算符 (或 RLIKE 和 NOT RLIKE) 来操作正则表达式。
+
+IN 操作符允许您在 WHERE 子句中规定多个值。
+SQL IN 语法
+SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1,value2,...);
+
+BETWEEN 操作符选取介于两个值之间的数据范围内的值。这些值可以是数值、文本或者日期。
+SQL BETWEEN 语法
+SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+NOT BETWEEN 操作符实例
+如需显示不在上面实例范围内的网站，请使用 NOT BETWEEN：
+SELECT * FROM Websites
+WHERE alexa NOT BETWEEN 1 AND 20;
+
+SQL 别名
+通过使用 SQL，可以为表名称或列名称指定别名。
+基本上，创建别名是为了让列名称的可读性更强。
+列的 SQL 别名语法
+SELECT column_name AS alias_name
+FROM table_name;
+表的 SQL 别名语法
+SELECT column_name(s)
+FROM table_name AS alias_name;
+提示：如果列名称包含空格，要求使用双引号或方括号
+例
+SELECT w.name, w.url, a.count, a.date 
+FROM Websites AS w, access_log AS a 
+WHERE a.site_id=w.id and w.name="菜鸟教程";
+在下面的情况下，使用别名很有用：
+在查询中涉及超过一个表
+在查询中使用了函数
+列名称很长或者可读性差
+需要把两个列或者多个列结合在一起
+
+SQL JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。
+最常见的 JOIN 类型：SQL INNER JOIN（简单的 JOIN）。 SQL INNER JOIN 从多个表中返回满足 JOIN 条件的所有行。
+
+SQL JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。
+最常见的 JOIN 类型：SQL INNER JOIN（简单的 JOIN）。 SQL INNER JOIN 从多个表中返回满足 JOIN 条件的所有行。
+例
+SELECT Websites.id, Websites.name, access_log.count, access_log.date
+FROM Websites
+INNER JOIN access_log
+ON Websites.id=access_log.site_id;
+可以使用的不同的 SQL JOIN 类型：
+INNER JOIN：如果表中有至少一个匹配，则返回行
+LEFT JOIN：即使右表中没有匹配，也从左表返回所有的行
+RIGHT JOIN：即使左表中没有匹配，也从右表返回所有的行
+FULL JOIN：只要其中一个表中存在匹配，则返回行（MySQL中不支持 FULL OUTER JOIN）
+
+UNION 操作符用于合并两个或多个 SELECT 语句的结果集。
+请注意，UNION 内部的每个 SELECT 语句必须拥有相同数量的列。列也必须拥有相似的数据类型。同时，每个 SELECT 语句中的列的顺序必须相同。
+SQL UNION 语法
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+注释：默认地，UNION 操作符选取不同的值。如果允许重复的值，请使用 UNION ALL。
+SQL UNION ALL 语法
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+注释：UNION 结果集中的列名总是等于 UNION 中第一个 SELECT 语句中的列名。
+例
+下面的 SQL 语句从 "Websites" 和 "apps" 表中选取所有不同的country（只有不同的值）：
+SELECT country FROM Websites
+UNION
+SELECT country FROM apps
+ORDER BY country;
+
+SELECT INTO 语句从一个表复制数据，然后把数据插入到另一个新表中。
+MySQL 数据库不支持 SELECT ... INTO 语句，但支持 INSERT INTO ... SELECT 。
+当然你可以使用以下语句来拷贝表结构及数据：
+CREATE TABLE 新表 SELECT * FROM 旧表 
+SELECT INTO 语法
+我们可以复制所有的列插入到新表中：
+SELECT *
+INTO newtable [IN externaldb]
+FROM table1;
+或者只复制希望的列插入到新表中：
+SELECT column_name(s)
+INTO newtable [IN externaldb]
+FROM table1;
+
+INSERT INTO SELECT 语句从一个表复制数据，然后把数据插入到一个已存在的表中。目标表中任何已存在的行都不会受影响。
+SQL INSERT INTO SELECT 语法
+我们可以从一个表中复制所有的列插入到另一个已存在的表中：
+INSERT INTO table2
+SELECT * FROM table1;
+或者我们可以只复制希望的列插入到另一个已存在的表中：
+INSERT INTO table2
+(column_name(s))
+SELECT column_name(s)
+FROM table1;
