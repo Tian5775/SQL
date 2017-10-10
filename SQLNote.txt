@@ -1,204 +1,284 @@
-SELECT - �����ݿ�����ȡ����
-UPDATE - �������ݿ��е�����
-DELETE - �����ݿ���ɾ������
-INSERT INTO - �����ݿ��в���������
-CREATE DATABASE - ���������ݿ�
-ALTER DATABASE - �޸����ݿ�
-CREATE TABLE - �����±�
-ALTER TABLE - ������ı䣩���ݿ��
-DROP TABLE - ɾ����
-CREATE INDEX - ������������������
-DROP INDEX - ɾ������
+﻿SELECT - 从数据库中提取数据
+UPDATE - 更新数据库中的数据
+DELETE - 从数据库中删除数据
+INSERT INTO - 向数据库中插入新数据
+CREATE DATABASE - 创建新数据库
+ALTER DATABASE - 修改数据库
+CREATE TABLE - 创建新表
+ALTER TABLE - 变更（改变）数据库表
+DROP TABLE - 删除表
+CREATE INDEX - 创建索引（搜索键）
+DROP INDEX - 删除索引
 
-SELECT �﷨
+SELECT 语法
 SELECT column_name,column_name FROM table_name;
-��
+与
 SELECT * FROM table_name;
 
-SELECT DISTINCT �﷨
+SELECT DISTINCT 语法
 SELECT DISTINCT column_name,column_name
 FROM table_name;
-��:
-����� SQL ������ "Websites" ���� "country" ����ѡȡΨһ��ͬ��ֵ��Ҳ����ȥ�� "country" ���ظ�ֵ��
+例:
+下面的 SQL 语句仅从 "Websites" 表的 "country" 列中选取唯一不同的值，也就是去掉 "country" 列重复值：
 SELECT DISTINCT country FROM Websites;
 
-WHERE �﷨
+WHERE 语法
 SELECT column_name,column_name
 FROM table_name
 WHERE column_name operator value;
-��:
-����� SQL ���� "Websites" ����ѡȡ����Ϊ "CN" ��������վ��
+例:
+下面的 SQL 语句从 "Websites" 表中选取国家为 "CN" 的所有网站：
 SELECT * FROM Websites WHERE country='CN';
-���������������� WHERE �Ӿ���ʹ�ã�
-�����	����
-=	����
-<>	�����ڡ�ע�ͣ��� SQL ��һЩ�汾�У��ò������ɱ�д�� !=
->	����
-<	С��
->=	���ڵ���
-<=	С�ڵ���
-BETWEEN	��ĳ����Χ��
-LIKE	����ĳ��ģʽ
-IN	ָ�����ĳ���еĶ������ֵ
+下面的运算符可以在 WHERE 子句中使用：
+运算符	描述
+=	等于
+<>	不等于。注释：在 SQL 的一些版本中，该操作符可被写成 !=
+>	大于
+<	小于
+>=	大于等于
+<=	小于等于
+BETWEEN	在某个范围内
+LIKE	搜索某种模式
+IN	指定针对某个列的多个可能值
 
-ORDER BY �ؼ������ڶԽ��������һ���л��߶���н�������
-ORDER BY �ؼ���Ĭ�ϰ�������Լ�¼�������������Ҫ���ս���Լ�¼��������������ʹ�� DESC �ؼ��֡�
-ORDER BY �﷨
+ORDER BY 关键字用于对结果集按照一个列或者多个列进行排序。
+ORDER BY 关键字默认按照升序对记录进行排序。如果需要按照降序对记录进行排序，您可以使用 DESC 关键字。
+ORDER BY 语法
 SELECT column_name,column_name
 FROM table_name
 ORDER BY column_name,column_name ASC|DESC;
 
-INSERT INTO �����������в����¼�¼��
-INSERT INTO �﷨
-INSERT INTO �����������ֱ�д��ʽ��
-��һ����ʽ����ָ��Ҫ�������ݵ�������ֻ���ṩ�������ֵ���ɣ�
+INSERT INTO 语句用于向表中插入新记录。
+INSERT INTO 语法
+INSERT INTO 语句可以有两种编写形式。
+第一种形式无需指定要插入数据的列名，只需提供被插入的值即可：
 INSERT INTO table_name
 VALUES (value1,value2,value3,...);
-�ڶ�����ʽ��Ҫָ���������������ֵ��
+第二种形式需要指定列名及被插入的值：
 INSERT INTO table_name (column1,column2,column3,...)
 VALUES (value1,value2,value3,...);
 
-UPDATE ������ڸ��±����Ѵ��ڵļ�¼��
-UPDATE �﷨
+UPDATE 语句用于更新表中已存在的记录。
+UPDATE 语法
 UPDATE table_name
 SET column1=value1,column2=value2,...
 WHERE some_column=some_value;
-�ڸ��¼�¼ʱҪ����С�ģ�
+在更新记录时要格外小心！
 
-DELETE �������ɾ�����е��С�
-DELETE �﷨
+DELETE 语句用于删除表中的行。
+DELETE 语法
 DELETE FROM table_name
 WHERE some_column=some_value;
 
-SELECT TOP �Ӿ����ڹ涨Ҫ���صļ�¼����Ŀ��
-SELECT TOP �Ӿ����ӵ����ǧ����¼�Ĵ��ͱ���˵���Ƿǳ����õġ�
-ע�ͣ��������е����ݿ�ϵͳ��֧�� SELECT TOP �Ӿ䡣
-SQL Server / MS Access �﷨
+SELECT TOP 子句用于规定要返回的记录的数目。
+SELECT TOP 子句对于拥有数千条记录的大型表来说，是非常有用的。
+注释：并非所有的数据库系统都支持 SELECT TOP 子句。
+SQL Server / MS Access 语法
 SELECT TOP number|percent column_name(s)
 FROM table_name;
-MySQL �﷨
+MySQL 语法
 SELECT column_name(s)
 FROM table_name
 LIMIT number;
-��
+例
 SELECT * FROM Websites LIMIT 2;
 
-LIKE ������������ WHERE �Ӿ����������е�ָ��ģʽ��
-SQL LIKE �﷨
+LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式。
+SQL LIKE 语法
 SELECT column_name(s)
 FROM table_name
 WHERE column_name LIKE pattern;
-��
-����� SQL ���ѡȡ name ����ĸ "G" ��ʼ�����пͻ���
+例
+下面的 SQL 语句选取 name 以字母 "G" 开始的所有客户：
 SELECT * FROM Websites
 WHERE name LIKE 'G%';
-ͨ��ʹ�� NOT �ؼ��֣�������ѡȡ��ƥ��ģʽ�ļ�¼��
-��
-����� SQL ���ѡȡ name ������ģʽ "oo" �����пͻ���
+通过使用 NOT 关键字，您可以选取不匹配模式的记录。
+例
+下面的 SQL 语句选取 name 不包含模式 "oo" 的所有客户：
 SELECT * FROM Websites
 WHERE name NOT LIKE '%oo%';
 
-�� SQL �У�ͨ����� SQL LIKE ������һ��ʹ�á�
-SQL ͨ��������������е����ݡ�
-�� SQL �У���ʹ������ͨ�����
-%	��� 0 �������ַ�
-_	���һ���ַ�
-[charlist]	�ַ����е��κε�һ�ַ�
-[^charlist]��[!charlist]	�����ַ����е��κε�һ�ַ�
-MySQL ��ʹ�� REGEXP �� NOT REGEXP ����� (�� RLIKE �� NOT RLIKE) �������������ʽ��
+在 SQL 中，通配符与 SQL LIKE 操作符一起使用。
+SQL 通配符用于搜索表中的数据。
+在 SQL 中，可使用以下通配符：
+%	替代 0 个或多个字符
+_	替代一个字符
+[charlist]	字符列中的任何单一字符
+[^charlist]或[!charlist]	不在字符列中的任何单一字符
+MySQL 中使用 REGEXP 或 NOT REGEXP 运算符 (或 RLIKE 和 NOT RLIKE) 来操作正则表达式。
 
-IN �������������� WHERE �Ӿ��й涨���ֵ��
-SQL IN �﷨
+IN 操作符允许您在 WHERE 子句中规定多个值。
+SQL IN 语法
 SELECT column_name(s)
 FROM table_name
 WHERE column_name IN (value1,value2,...);
 
-BETWEEN ������ѡȡ��������ֵ֮������ݷ�Χ�ڵ�ֵ����Щֵ��������ֵ���ı��������ڡ�
-SQL BETWEEN �﷨
+BETWEEN 操作符选取介于两个值之间的数据范围内的值。这些值可以是数值、文本或者日期。
+SQL BETWEEN 语法
 SELECT column_name(s)
 FROM table_name
 WHERE column_name BETWEEN value1 AND value2;
-NOT BETWEEN ������ʵ��
-������ʾ��������ʵ����Χ�ڵ���վ����ʹ�� NOT BETWEEN��
+NOT BETWEEN 操作符实例
+如需显示不在上面实例范围内的网站，请使用 NOT BETWEEN：
 SELECT * FROM Websites
 WHERE alexa NOT BETWEEN 1 AND 20;
 
-SQL ����
-ͨ��ʹ�� SQL������Ϊ�����ƻ�������ָ��������
-�����ϣ�����������Ϊ���������ƵĿɶ��Ը�ǿ��
-�е� SQL �����﷨
+SQL 别名
+通过使用 SQL，可以为表名称或列名称指定别名。
+基本上，创建别名是为了让列名称的可读性更强。
+列的 SQL 别名语法
 SELECT column_name AS alias_name
 FROM table_name;
-���� SQL �����﷨
+表的 SQL 别名语法
 SELECT column_name(s)
 FROM table_name AS alias_name;
-��ʾ����������ư����ո�Ҫ��ʹ��˫���Ż�����
-��
+提示：如果列名称包含空格，要求使用双引号或方括号
+例
 SELECT w.name, w.url, a.count, a.date 
 FROM Websites AS w, access_log AS a 
-WHERE a.site_id=w.id and w.name="����̳�";
-�����������£�ʹ�ñ��������ã�
-�ڲ�ѯ���漰����һ����
-�ڲ�ѯ��ʹ���˺���
-�����ƺܳ����߿ɶ��Բ�
-��Ҫ�������л��߶���н����һ��
+WHERE a.site_id=w.id and w.name="菜鸟教程";
+在下面的情况下，使用别名很有用：
+在查询中涉及超过一个表
+在查询中使用了函数
+列名称很长或者可读性差
+需要把两个列或者多个列结合在一起
 
-SQL JOIN �Ӿ����ڰ������������������н��������������Щ��֮��Ĺ�ͬ�ֶΡ�
-����� JOIN ���ͣ�SQL INNER JOIN���򵥵� JOIN���� SQL INNER JOIN �Ӷ�����з������� JOIN �����������С�
+SQL JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。
+最常见的 JOIN 类型：SQL INNER JOIN（简单的 JOIN）。 SQL INNER JOIN 从多个表中返回满足 JOIN 条件的所有行。
 
-SQL JOIN �Ӿ����ڰ������������������н��������������Щ��֮��Ĺ�ͬ�ֶΡ�
-����� JOIN ���ͣ�SQL INNER JOIN���򵥵� JOIN���� SQL INNER JOIN �Ӷ�����з������� JOIN �����������С�
-��
+SQL JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。
+最常见的 JOIN 类型：SQL INNER JOIN（简单的 JOIN）。 SQL INNER JOIN 从多个表中返回满足 JOIN 条件的所有行。
+例
 SELECT Websites.id, Websites.name, access_log.count, access_log.date
 FROM Websites
 INNER JOIN access_log
 ON Websites.id=access_log.site_id;
-����ʹ�õĲ�ͬ�� SQL JOIN ���ͣ�
-INNER JOIN���������������һ��ƥ�䣬�򷵻���
-LEFT JOIN����ʹ�ұ���û��ƥ�䣬Ҳ������������е���
-RIGHT JOIN����ʹ�����û��ƥ�䣬Ҳ���ұ��������е���
-FULL JOIN��ֻҪ����һ�����д���ƥ�䣬�򷵻��У�MySQL�в�֧�� FULL OUTER JOIN��
+可以使用的不同的 SQL JOIN 类型：
+INNER JOIN：如果表中有至少一个匹配，则返回行
+LEFT JOIN：即使右表中没有匹配，也从左表返回所有的行
+RIGHT JOIN：即使左表中没有匹配，也从右表返回所有的行
+FULL JOIN：只要其中一个表中存在匹配，则返回行（MySQL中不支持 FULL OUTER JOIN）
 
-UNION ���������ںϲ��������� SELECT ���Ľ������
-��ע�⣬UNION �ڲ���ÿ�� SELECT ������ӵ����ͬ�������С���Ҳ����ӵ�����Ƶ��������͡�ͬʱ��ÿ�� SELECT ����е��е�˳�������ͬ��
-SQL UNION �﷨
+UNION 操作符用于合并两个或多个 SELECT 语句的结果集。
+请注意，UNION 内部的每个 SELECT 语句必须拥有相同数量的列。列也必须拥有相似的数据类型。同时，每个 SELECT 语句中的列的顺序必须相同。
+SQL UNION 语法
 SELECT column_name(s) FROM table1
 UNION
 SELECT column_name(s) FROM table2;
-ע�ͣ�Ĭ�ϵأ�UNION ������ѡȡ��ͬ��ֵ����������ظ���ֵ����ʹ�� UNION ALL��
-SQL UNION ALL �﷨
+注释：默认地，UNION 操作符选取不同的值。如果允许重复的值，请使用 UNION ALL。
+SQL UNION ALL 语法
 SELECT column_name(s) FROM table1
 UNION ALL
 SELECT column_name(s) FROM table2;
-ע�ͣ�UNION ������е��������ǵ��� UNION �е�һ�� SELECT ����е�������
-��
-����� SQL ���� "Websites" �� "apps" ����ѡȡ���в�ͬ��country��ֻ�в�ͬ��ֵ����
+注释：UNION 结果集中的列名总是等于 UNION 中第一个 SELECT 语句中的列名。
+例
+下面的 SQL 语句从 "Websites" 和 "apps" 表中选取所有不同的country（只有不同的值）：
 SELECT country FROM Websites
 UNION
 SELECT country FROM apps
 ORDER BY country;
 
-SELECT INTO ����һ�����������ݣ�Ȼ������ݲ��뵽��һ���±��С�
-MySQL ���ݿⲻ֧�� SELECT ... INTO ��䣬��֧�� INSERT INTO ... SELECT ��
-��Ȼ�����ʹ������������������ṹ�����ݣ�
-CREATE TABLE �±� SELECT * FROM �ɱ� 
-SELECT INTO �﷨
-���ǿ��Ը������е��в��뵽�±��У�
+SELECT INTO 语句从一个表复制数据，然后把数据插入到另一个新表中。
+MySQL 数据库不支持 SELECT ... INTO 语句，但支持 INSERT INTO ... SELECT 。
+当然你可以使用以下语句来拷贝表结构及数据：
+CREATE TABLE 新表 SELECT * FROM 旧表 
+SELECT INTO 语法
+我们可以复制所有的列插入到新表中：
 SELECT *
 INTO newtable [IN externaldb]
 FROM table1;
-����ֻ����ϣ�����в��뵽�±��У�
+或者只复制希望的列插入到新表中：
 SELECT column_name(s)
 INTO newtable [IN externaldb]
 FROM table1;
 
-INSERT INTO SELECT ����һ�����������ݣ�Ȼ������ݲ��뵽һ���Ѵ��ڵı��С�Ŀ������κ��Ѵ��ڵ��ж�������Ӱ�졣
-SQL INSERT INTO SELECT �﷨
-���ǿ��Դ�һ�����и������е��в��뵽��һ���Ѵ��ڵı��У�
+INSERT INTO SELECT 语句从一个表复制数据，然后把数据插入到一个已存在的表中。目标表中任何已存在的行都不会受影响。
+SQL INSERT INTO SELECT 语法
+我们可以从一个表中复制所有的列插入到另一个已存在的表中：
 INSERT INTO table2
 SELECT * FROM table1;
-�������ǿ���ֻ����ϣ�����в��뵽��һ���Ѵ��ڵı��У�
+或者我们可以只复制希望的列插入到另一个已存在的表中：
 INSERT INTO table2
 (column_name(s))
 SELECT column_name(s)
 FROM table1;
+
+CREATE DATABASE 语句用于创建数据库。
+CREATE DATABASE 语法
+CREATE DATABASE dbname;
+例
+下面的 SQL 语句创建一个名为 "my_db" 的数据库：
+CREATE DATABASE my_db;
+
+CREATE TABLE 语句用于创建数据库中的表。
+表由行和列组成，每个表都必须有个表名。
+SQL CREATE TABLE 语法
+CREATE TABLE table_name
+(
+column_name1 data_type(size),
+column_name2 data_type(size),
+column_name3 data_type(size),
+....
+);
+例：
+创建一个名为 "Persons" 的表，包含五列：PersonID、LastName、FirstName、Address 和 City。
+CREATE TABLE Persons
+(
+PersonID int,
+LastName varchar(255),
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255)
+);
+
+SQL CONSTRAINT 约束用于规定表中的数据规则。
+NOT NULL - 指示某列不能存储 NULL 值。
+UNIQUE - 保证某列的每行必须有唯一的值。
+PRIMARY KEY - NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。
+FOREIGN KEY - 保证一个表中的数据匹配另一个表中的值的参照完整性。
+CHECK - 保证列中的值符合指定的条件。
+DEFAULT - 规定没有给列赋值时的默认值。
+PRIMARY KEY 约束：http://www.runoob.com/sql/sql-primarykey.html
+
+CREATE INDEX 语法
+在表上创建一个简单的索引。允许使用重复的值：
+CREATE INDEX index_name
+ON table_name (column_name)
+SQL CREATE UNIQUE INDEX 语法
+在表上创建一个唯一的索引。不允许使用重复的值：唯一的索引意味着两个行不能拥有相同的索引值。
+CREATE UNIQUE INDEX index_name
+ON table_name (column_name)
+
+DROP INDEX 语句用于删除表中的索引。
+DROP TABLE 语句用于删除表。
+DROP DATABASE 语句用于删除数据库。
+TRUNCATE TABLE table_name 仅仅删除表内的数据并不删除表本身
+
+ALTER TABLE 语句用于在已有的表中添加、删除或修改列。
+SQL ALTER TABLE 语法
+如需在表中添加列，请使用下面的语法:
+ALTER TABLE table_name
+ADD column_name datatype
+如需删除表中的列，请使用下面的语法（请注意，某些数据库系统不允许这种在数据库表中删除列的方式）：
+ALTER TABLE table_name
+DROP COLUMN column_name
+要改变表中列的数据类型，请使用下面的语法：
+SQL Server / MS Access：
+ALTER TABLE table_name
+ALTER COLUMN column_name datatype
+My SQL / Oracle：
+ALTER TABLE table_name
+MODIFY COLUMN column_name datatype
+
+Auto-increment 会在新记录插入表中时生成一个唯一的数字。
+例：
+下面的 SQL 语句把 "Persons" 表中的 "ID" 列定义为 auto-increment 主键字段：
+CREATE TABLE Persons
+(
+ID int NOT NULL AUTO_INCREMENT,
+...
+PRIMARY KEY (ID)
+)
+默认地，AUTO_INCREMENT 的开始值是 1，每条新记录递增 1。
+要让 AUTO_INCREMENT 序列以其他的值起始，请使用下面的 SQL 语法：
+ALTER TABLE Persons AUTO_INCREMENT=100
